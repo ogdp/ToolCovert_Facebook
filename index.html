@@ -89,6 +89,62 @@
               </div>
             </div>
           </div>
+
+          <!-- Remove Anonymous DeepTry -->
+
+          <div class="row" style="padding: 15px; height: auto !important">
+            <h1 class="">Remove Anonymous DeepTry</h1>
+            <div class="panel panel-success" style="height: auto !important">
+              <div class="panel-body">
+                <div class="tab-content">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Token: </label>
+                      <div class="col-sm-14">
+                        <textarea
+                          rows="8"
+                          id="list_Token_Data_2"
+                          class="form-control"
+                          placeholder="Mỗi token 1 dòng"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-12">
+                <input
+                  id="key_remove_string_2"
+                  placeholder="Nhập key cần xoá "
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <button
+                  id="get_token_btn_2"
+                  class="btn btn-primary btn-lg btn-block"
+                >
+                  SUBMIT
+                </button>
+              </div>
+            </div>
+            <div class="form-group location">
+              <label class="col-sm-2 control-label">Kết quả </label>
+              <div class="col-sm-14">
+                <textarea
+                  type="text"
+                  id="result_token_after_convert_2"
+                  class="form-control input-lg"
+                  rows="8"
+                  placeholder="Kết quả"
+                ></textarea>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -117,6 +173,69 @@
         await getOnlyToken(list_Token_Data.value);
         const data2 = cc.join("\n");
         result_token_after_convert.value = data2;
+      });
+    </script>
+    <script>
+      const get_token_btn2 = document.querySelector("#get_token_btn_2");
+      const list_Token_Data2 = document.querySelector("#list_Token_Data_2");
+      const key_remove_string2 = document.querySelector("#key_remove_string_2");
+      const result_token_after_conver2 = document.querySelector(
+        "#result_token_after_convert_2"
+      );
+      var cc;
+      function getOnlyToken(listToken) {
+        // const data = "1333|EAAAgsgdfg63YIHD|15 Anonymouse DeepTry 132254533|EAAAdsaf63YIHD|huy nam 1333|EAAA6gfg3YIHD|15244 Anonymouse DeepTry 13233|EAAgsgA63YIHD|2215 Anonymouse DeepTry ";
+
+        //         const data = "1333|EAAAgsgdfg63YIHD|15 Anonymouse DeepTry 132254533|EAAAdsaf63YIHD|huy nam 1333|EAAA6gfg3YIHD|15244 Anonymouse DeepTry 13233|EAAgsgA63YIHD|2215 Anonymouse DeepTry ";
+
+        // // Biến động (ví dụ: "cc")
+        // const cc = "newVariable";
+
+        // // Tạo biểu thức chính quy động
+        // const dynamicRegex = new RegExp(`(\\d+\\|[^|]*\\|[^|]* ${cc}\\s*)`, 'g');
+
+        // // Sử dụng biểu thức chính quy động để tìm và thay thế
+        // const newData = data.replace(dynamicRegex, '');
+
+        // console.log(newData);
+
+        // Sử dụng biểu thức chính quy để tìm và thay thế các chuỗi chứa "Anonymouse DeepTry"
+        let newData = "";
+        if (key_remove_string2.value !== "") {
+          // Tạo biểu thức chính quy động
+          const dynamicRegex = new RegExp(
+            `(\\d+\\|[^|]*\\|[^|]* ${key_remove_string2.value}\\s*)`,
+            "g"
+          );
+
+          // Sử dụng biểu thức chính quy động để tìm và thay thế
+          newData = listToken.replace(dynamicRegex, "");
+
+          console.log(key_remove_string2.value);
+        } else {
+          newData = listToken.replace(
+            /(\d+\|[^|]*\|[^|]* Anonymouse DeepTry\s*)/g,
+            ""
+          );
+        }
+
+        console.log(newData);
+        // Sử dụng regex để tìm và lấy phần chuỗi bắt đầu bằng "EAAA"
+        const matches = newData.match(/EAA[^|]*/g);
+        // Hiển thị kết quả
+
+        if (matches) {
+          cc = matches.map((match, index) => {
+            return match;
+          });
+        } else {
+          console.log("Không tìm thấy phù hợp.");
+        }
+      }
+      get_token_btn2.addEventListener("click", async () => {
+        await getOnlyToken(list_Token_Data2.value);
+        const data2 = cc.join("\n");
+        result_token_after_conver2.value = data2;
       });
     </script>
   </body>
